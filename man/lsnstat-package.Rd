@@ -6,7 +6,7 @@
 \alias{lsnstat-package}
 \title{lsnstat: La Societe Nouvelle API access}
 \description{
-The lsnstat package was created to facilitate access to the macro_data service of the La Societe Nouvelle API.
+The lsnstat package was created to facilitate access to the macro_data service of the La Societe Nouvelle API. It ensures an easy and fully-disclosed access to all macro-level data used in the La Societe Nouvelle systems and the related metadata.
 }
 \seealso{
 Useful links:
