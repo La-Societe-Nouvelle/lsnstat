@@ -5,189 +5,113 @@
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #'
-#' @param table Kind of data requested : eco-environmental footprints or structural forecasted economic data (required)
-#' @param activity NACE Rev.2 economic activity requested : branch or division code (optional)
-#' @param year Year or years requested (optional)
-#' @param indic For footprint requests, eco-environnemental footprint dimension (optional). A list is available in the lsnr package [lsnr::get_indicator_list()]
-#' @param area Geographic filter (optional)
-#' @param type For footprint requests, type of data : observed, target, trend (required for footprints request)
-#' @param classification Data NACE Rev.2 granularity : branch by 38 or division by 88 (required for footprints request)
-#' @param flag Flag filter (optional). It informs on the status of each data observation.
-#' @param path Linear or geometric path for target aims to be fulfilled (optional)
-#' @param currency Currency filter (optional). Allows to narrow the request to current or constant prices.
-#' @param product Only for structural economic data, filter for product (optional)
-#' @param unit Unit filter (optional)
+#' @param dataset dataset requested : list available at https://docs.lasocietenouvelle.org/series-donnees (required)
+#' @param filters filters to apply : list of dataset params available through service lsnstat_metadata (optional)
 #'
 #' @examples
 #'
-#' #Get CPEB forecasted data for division 10 between 2022 and 2030.
+#' # GET CPEB forecasted data for division "10" between 2023 and 2025.
 #'
-#' lsnrstat(table = "structural",year = 2022:2030,type = "cpeb",activity = "10")
+#' lsnstat_macrodata(dataset = "na_cpeb", filters="classification=A88&division=10&year=2023+2024+2025")
 #'
-#' #Get TEI forecasted data for branch JA use of product OZ between 2022 and 2030.
+#' # GET TEI forecasted data for branch JA use of product OZ in 2022.
 #'
-#' lsnrstat(table = "structural",year = 2022:2030,type = "tei",activity = "JA",product = "OZ")
+#' lsnstat_macrodata(dataset = "na_tei", filters="activity=JA&product=OZ&year=2022")
 #'
-#' #Get branch EZ 2018 footprints for NRG, GHG and ECO indicators.
+#' # GET branch EZ 2018 production footprint for NRG and GHG indicators.
 #'
-#' lsnrstat(table = "footprint",year = 2018,activity = "EZ",indic = c("NRG","GHG","ECO"))
+#' lsnstat_macrodata(datatset = "macro_fpt_a38", filters="branch=EZ&year=2018&aggregate=PRD&indic=NRG+GHG")
 #'
 #' @return A [data.frame()].
 #'
 #' @export
 
-lsnrstat = function(table = c("footprint","structural"),
-                   activity = "",
-                   year = "",
-                   indic = c("","ECO","ART","GHG","SOC","GEQ","NRG","MAT","HAZ","KNW","WAT","WAS","IDR"),
-                   area = "",
-                   type = c("","tgt","trd","cpeb","ere","pat_nf","tei","tess"),
-                   classification = c("A38","A88"),
-                   flag = "",
-                   path = c("","linear","geometric"),
-                   currency = "",
-                   product = "",
-                   unit){
-
-  #####################PARAMETERS FORMATTING####################
-
-  if(all(grepl("footprint|fpt|empreinte",tolower(table)))){
-    table = "macro_fpt"
-  }else
-  {
-  if(all(tolower(table) == "na") || all(grepl("eco|str",tolower(table)))){
-    table = "na"
-  }else
-  {
-    stop("Wrong or missing 'table' input")
-  }}
-
-
-  #######################REQUESTS FORMATTING#######################
-
-  if(table == "macro_fpt"){
-
-    if(all(type == c("","tgt","trd","cpeb","ere","pat_nf","tei","tess")))
-    {
-      type = ""
-    }
-
-    if(length(type) != 1 || is.character(type) == F || type %in% c("","tgt","trd") == F){
-      stop("Wrong or missing 'type' input")
-    }
-
-    if(all(indic %in% c("",lsnr:::get_indicator_list()[,"Indicator code"])) == F)
-    {
-      stop("Wrong 'indic' input")
-    }
-
-
-    if(length(classification) != 1 || is.character(classification) == F){
-
-      wr = 1
-
-      if(all(activity %in% unique(unlist(lsnr:::Divisions[,"DIVISION"]))))
-      {
-        classification = "a88"
-        wr = 0
-      }
-
-
-      if(all(activity %in% unique(unlist(lsnr:::Divisions[,"BRANCH"]))))
-      {
-        classification = "a38"
-        wr = 0
-      }
-      if(wr == 1)
-        {
-      stop("Wrong or missing 'classification' input")
-        }
-    }
-
-    if(grepl("38",classification)){
-      classification = "a38"
-      branch = activity
-    }
-
-    if(grepl("88",classification)){
-      classification = "a88"
-      division = activity
-    }
-
-    parameters <<- c(as.list(environment()), list())
-
-    parameters = parameters[names(parameters) %in% c("year","branch","division","aggregate","area","currency","target","path","flag","indic","path","trend")]
-
-    for(i in 1:length(parameters)){
-      parameters[[i]] = paste0(names(parameters)[[i]],"=",parameters[[i]])
-    }
-
-    filters = paste0(unlist(parameters),collapse = "&")
-
-    type = ifelse(type == "","",paste0("_",tolower(type),"_"))
-
-    link = paste0("https://api.lasocietenouvelle.org/macrodata/",table,type,"_",classification,"?",filters)
-
+lsnrstat = function (dataset,filters)
+{
+  # check dataset param
+  if (missing(dataset)) {
+    stop("dataset is missing")
   }
 
-  if(table == "na"){
+  entrypoint = "https://api.lasocietenouvelle.org/macrodata/"
 
-    if(length(type) != 1 || is.character(type) == F || type %in% c("cpeb","ere","pat_nf","tei","tess") == F){
-      stop("Wrong or missing 'type' input. For structural economic data, please use one of these types : 'cpeb','ere','pat_nf','tei','tess'")
-    }
-
-    if(all(grepl("38",classification))){
-      classification = "A38"
-    }
-
-    if(all(grepl("88",classification))){
-      classification = "A88"
-    }
-
-    if(sum(grepl("88",classification)) == 1 && sum(grepl("38",classification)) == 1){
-      classification = ""
-    }
-
-    parameters <<- c(as.list(environment()), list())
-
-    parameters = parameters[names(parameters) %in% c("year","activity","product","aggregate","unit","flag","classification","flag")]
-
-    if(type == "cpeb")
-    {
-      parameters = parameters[names(parameters) != "product"]
-    }
-
-    for(i in 1:length(parameters)){
-      parameters[[i]] = paste0(names(parameters)[[i]],"=",parameters[[i]])
-    }
-
-    filters = paste0(unlist(parameters),collapse = "&")
-
-    link = paste0("https://api.lasocietenouvelle.org/macrodata/",table,"_",type,"?",filters)
-
+  if(!is.null(filters)){
+    endpoint = paste0(entrypoint,dataset, "?", filters)
+  } else {
+    endpoint = paste0(entrypoint,dataset)
   }
 
-  ######################SUBMIT REQUEST AND FORMAT DATA#############
   tryCatch({
 
-    raw_table = GET(link)
+    print(endpoint)
 
-    formatted_table = fromJSON(rawToChar(raw_table$content))$data %>%
-      mutate(lastupdate = as.Date(lastupdate),
-             lastupload = as.Date(lastupload))
+    raw_data = GET(endpoint)
+    res = fromJSON(rawToChar(raw_data$content))
 
-    if(table == "macro_fpt"){
-    unit = lsnr:::get_indicator_list()[match(formatted_table$indic,lsnr:::get_indicator_list()[,"Indicator code"]),"Unit code"]
-    formatted_table = formatted_table %>%
-      mutate(unit = unit)
+    # RESPONSE NOT OK
+    if (res$header$code!=200) {
+      stop(res$header$message)
     }
 
+    # NO DATA FOUND
+    else if (length(res$data)==0) {
+      stop("No data found")
+    }
+
+    # OK
+    else {
+      formatted_data = res$data %>%
+        mutate(lastupdate = as.Date(lastupdate)) %>%
+        rename_with(toupper)
+    }
+
+  # API ERROR
   }, error = function(e) {
     print(e)
-    stop(paste0("Données indisponibles : ",link))
+    stop(e)
   })
 
+  return(formatted_data)
+}
 
-  return(formatted_table)
 
+lsnstat_metadata = function (dataset,param)
+{
+  # check dataset param
+  if (missing(dataset)) {
+    stop("dataset is missing")
+  }
+
+  entrypoint = "https://api.lasocietenouvelle.org/macrodata/metadata/"
+
+  if(!is.null(pram)){
+    endpoint = paste0(entrypoint,dataset, "?", "param=", param)
+  } else {
+    endpoint = paste0(entrypoint,dataset)
+  }
+
+  tryCatch({
+
+    print(endpoint)
+
+    raw_data = GET(endpoint)
+    res = fromJSON(rawToChar(raw_data$content))
+
+    # RESPONSE NOT OK
+    if (res$header$code!=200) {
+      stop(res$header$message)
+    }
+
+    # OK
+    else {
+      formatted_data = res$metadata
+    }
+
+    # API ERROR
+  }, error = function(e) {
+    print(e)
+    stop(e)
+  })
+
+  return(formatted_data)
 }
