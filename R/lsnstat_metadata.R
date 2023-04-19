@@ -1,10 +1,10 @@
-#' Metadata query function for [lsnstat_macrodata]' requests.
+#' Metadata query function for [lsnstat_macrodata] requests.
 #'
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #'
-#' @param dataset dataset requested : list available at https://docs.lasocietenouvelle.org/series-donnees (required)
-#' @param param list of dataset params available for a dataset (optional)
+#' @param dataset dataset requested : list available at <https://docs.lasocietenouvelle.org/series-donnees> (required)
+#' @param param list of dataset 'params' available for a dataset (optional)
 #'
 #' @examples
 #'

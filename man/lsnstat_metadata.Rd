@@ -2,20 +2,20 @@
 % Please edit documentation in R/lsnstat_metadata.R
 \name{lsnstat_metadata}
 \alias{lsnstat_metadata}
-\title{Metadata query function for \link{lsnstat_macrodata}' requests.}
+\title{Metadata query function for \link{lsnstat_macrodata} requests.}
 \usage{
 lsnstat_metadata(dataset, param)
 }
 \arguments{
-\item{dataset}{dataset requested : list available at https://docs.lasocietenouvelle.org/series-donnees (required)}
+\item{dataset}{dataset requested : list available at \url{https://docs.lasocietenouvelle.org/series-donnees} (required)}
 
-\item{param}{list of dataset params available for a dataset (optional)}
+\item{param}{list of dataset 'params' available for a dataset (optional)}
 }
 \value{
 A \code{\link[=data.frame]{data.frame()}}.
 }
 \description{
-Metadata query function for \link{lsnstat_macrodata}' requests.
+Metadata query function for \link{lsnstat_macrodata} requests.
 }
 \examples{
 

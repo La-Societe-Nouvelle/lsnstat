@@ -1,6 +1,6 @@
 Package: lsnstat
 Title: 'La Societe Nouvelle' API Access
-Version: 1.0
+Version: 1.0.0
 Authors@R: 
     person("Joris", "BLAIN", , "joris.blain@lasocietenouvelle.org", role = c("aut", "cre"))
 Description: The 'lsnstat' package was created to facilitate access to the
@@ -8,7 +8,8 @@ Description: The 'lsnstat' package was created to facilitate access to the
     and fully-disclosed access to all macro-level data used in the 
     'La Societe Nouvelle' systems and the related metadata.
 License: CeCILL
-URL: https://github.com/La-Societe-Nouvelle/
+URL: https://github.com/La-Societe-Nouvelle/lsnstat/
+BugReports: https://github.com/La-Societe-Nouvelle/lsnstat/issues/
 Imports: 
     dplyr,
     httr,

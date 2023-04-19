@@ -11,7 +11,8 @@ The 'lsnstat' package was created to facilitate access to the 'macro_data' servi
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/La-Societe-Nouvelle/}
+  \item \url{https://github.com/La-Societe-Nouvelle/lsnstat/}
+  \item Report bugs at \url{https://github.com/La-Societe-Nouvelle/lsnstat/issues/}
 }
 
 }

@@ -7,9 +7,9 @@
 lsnstat_macrodata(dataset, filters)
 }
 \arguments{
-\item{dataset}{dataset requested : list available at https://docs.lasocietenouvelle.org/series-donnees (required)}
+\item{dataset}{dataset requested : list available at \url{https://docs.lasocietenouvelle.org/series-donnees} (required)}
 
-\item{filters}{filters to apply : list of dataset params available through service \link{lsnstat_metadata} (optional)}
+\item{filters}{filters to apply : list of dataset 'params' available through service \link{lsnstat_metadata} (optional)}
 }
 \value{
 A \code{\link[=data.frame]{data.frame()}}.

@@ -6,8 +6,8 @@
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #'
-#' @param dataset dataset requested : list available at https://docs.lasocietenouvelle.org/series-donnees (required)
-#' @param filters filters to apply : list of dataset params available through service [lsnstat_metadata] (optional)
+#' @param dataset dataset requested : list available at <https://docs.lasocietenouvelle.org/series-donnees> (required)
+#' @param filters filters to apply : list of dataset 'params' available through service [lsnstat_metadata] (optional)
 #'
 #' @examples
 #'
