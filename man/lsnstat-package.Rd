@@ -4,17 +4,14 @@
 \name{lsnstat-package}
 \alias{lsnstat}
 \alias{lsnstat-package}
-\title{lsnstat: La Societe Nouvelle API access}
+\title{lsnstat: 'La Societe Nouvelle' API Access}
 \description{
-The lsnstat package was created to facilitate access to the macro_data service of the La Societe Nouvelle API. It ensures an easy and fully-disclosed access to all macro-level data used in the La Societe Nouvelle systems and the related metadata.
+The 'lsnstat' package was created to facilitate access to the 'macro_data' service of the 'La Societe Nouvelle' API. It ensures an easy and fully-disclosed access to all macro-level data used in the 'La Societe Nouvelle' systems and the related metadata.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/La-Societe-Nouvelle}
-  \item \url{https://lasocietenouvelle.org/}
-  \item \url{https://api.lasocietenouvelle.org/,https://lasocietenouvelle.org/portail}
-  \item \url{https://www.linkedin.com/company/la-societe-nouvelle/.}
+  \item \url{https://github.com/La-Societe-Nouvelle/}
 }
 
 }
