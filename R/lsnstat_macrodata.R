@@ -49,8 +49,6 @@ lsnstat_macrodata = function (dataset,filters)
 
   tryCatch({
 
-    print(endpoint)
-
     raw_data = GET(endpoint)
     res = fromJSON(rawToChar(raw_data$content))
 

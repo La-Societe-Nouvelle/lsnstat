@@ -46,8 +46,6 @@ lsnstat_metadata = function (dataset,param)
 
   tryCatch({
 
-    print(endpoint)
-
     raw_data = GET(endpoint)
     res = fromJSON(rawToChar(raw_data$content))
 

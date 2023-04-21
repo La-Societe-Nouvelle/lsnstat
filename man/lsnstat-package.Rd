@@ -6,7 +6,7 @@
 \alias{lsnstat-package}
 \title{lsnstat: 'La Societe Nouvelle' API Access}
 \description{
-The 'lsnstat' package was created to facilitate access to the 'macro_data' service of the 'La Societe Nouvelle' API. It ensures an easy and fully-disclosed access to all macro-level data used in the 'La Societe Nouvelle' systems and the related metadata.
+Tools facilitating access to the 'macro_data' service of the 'La Societe Nouvelle' API. It ensures an easy and fully-disclosed access to all macro-level data used in the 'La Societe Nouvelle' systems and the related metadata. Related API can be accessed from \url{https://api.lasocietenouvelle.org/}.
 }
 \seealso{
 Useful links:
@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Joris BLAIN \email{joris.blain@lasocietenouvelle.org}
+\strong{Maintainer}: Joris Blain \email{joris.blain@lasocietenouvelle.org}
 
 }
 \keyword{internal}
