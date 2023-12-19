@@ -1,4 +1,4 @@
-#' R companion of 'La Societe Nouvelle' macro_data API services
+#' R companion of 'La Societe Nouvelle' macrodata API services
 #'
 #' @importFrom dplyr  %>%
 #' @importFrom dplyr mutate
@@ -11,70 +11,36 @@
 #'
 #' @examples
 #'
-#' #GET 'CPEB'  (Branch production and operations accounts) forecasted
-#' # data for division "10" between 2023 and 2025.
-#'
-#' lsnstat_macrodata(dataset = "na_cpeb", filters="classification=A88&activity=10&year=2023+2024+2025")
-#'
-#' # GET 'TEI' (Intermediate consumption table) forecasted data
-#' # for branch 'JA' use of product 'OZ' in 2022.
-#'
-#' lsnstat_macrodata(dataset = "na_tei", filters="activity=JA&product=OZ&year=2022")
-#'
-#' # GET branch 'EZ' 2018 production footprint for 'NRG' and 'GHG' indicators.
+#' # GET industry 'A01' 2018 production footprint for 'NRG' and 'GHG' indicators.
 #'
 #' lsnstat_macrodata(
-#'   dataset = "macro_fpt_a38",
-#'   filters="branch=EZ&year=2018&aggregate=PRD&indic=NRG+GHG"
+#'   dataset = "macro_fpt",
+#'   filters="industry=A01&year=2018&aggregate=PRD&indic=NRG+GHG"
 #'   )
 #'
 #' @return A [data.frame()].
 #'
 #' @export
 
-lsnstat_macrodata = function (dataset,filters)
+lsnstat_macrodata = function (dataset,filters = NULL)
 {
+
   # check dataset param
   if (missing(dataset)) {
     stop("dataset is missing")
   }
 
-  entrypoint = "https://api.lasocietenouvelle.org/macrodata/"
+  res = try(lsnstat_endpoint(endpoint = "macrodata", dataset = dataset, filters = filters),silent = T)
 
-  if(!missing(filters)){
-    endpoint = paste0(entrypoint,dataset, "?", filters)
-  } else {
-    endpoint = paste0(entrypoint,dataset)
+  if(inherits(res,"try-error"))
+  {
+  stop(res)
   }
 
-  tryCatch({
-
-    raw_data = GET(endpoint)
-    res = fromJSON(rawToChar(raw_data$content))
-
-    # RESPONSE NOT OK
-    if (res$header$code!=200) {
-      stop(res$header$message)
-    }
-
-    # NO DATA FOUND
-    else if (length(res$data)==0) {
-      stop("No data found")
-    }
-
-    # OK
-    else {
-      formatted_data = res$data %>%
+  formatted_data = res %>%
         mutate(lastupdate = as.Date(lastupdate),
                lastupload = as.Date(lastupload)) %>%
         rename_with(toupper)
-    }
-
-  # API ERROR
-  }, error = function(e) {
-    print(e)
-    stop(e)
-  })
 
   return(formatted_data)
 }

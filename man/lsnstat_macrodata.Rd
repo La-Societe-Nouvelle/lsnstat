@@ -2,9 +2,9 @@
 % Please edit documentation in R/lsnstat_macrodata.R
 \name{lsnstat_macrodata}
 \alias{lsnstat_macrodata}
-\title{R companion of 'La Societe Nouvelle' macro_data API services}
+\title{R companion of 'La Societe Nouvelle' macrodata API services}
 \usage{
-lsnstat_macrodata(dataset, filters)
+lsnstat_macrodata(dataset, filters = NULL)
 }
 \arguments{
 \item{dataset}{dataset requested : list available at \url{https://docs.lasocietenouvelle.org/series-donnees} (required)}
@@ -15,25 +15,15 @@ lsnstat_macrodata(dataset, filters)
 A \code{\link[=data.frame]{data.frame()}}.
 }
 \description{
-R companion of 'La Societe Nouvelle' macro_data API services
+R companion of 'La Societe Nouvelle' macrodata API services
 }
 \examples{
 
-#GET 'CPEB'  (Branch production and operations accounts) forecasted
-# data for division "10" between 2023 and 2025.
-
-lsnstat_macrodata(dataset = "na_cpeb", filters="classification=A88&activity=10&year=2023+2024+2025")
-
-# GET 'TEI' (Intermediate consumption table) forecasted data
-# for branch 'JA' use of product 'OZ' in 2022.
-
-lsnstat_macrodata(dataset = "na_tei", filters="activity=JA&product=OZ&year=2022")
-
-# GET branch 'EZ' 2018 production footprint for 'NRG' and 'GHG' indicators.
+# GET industry 'A01' 2018 production footprint for 'NRG' and 'GHG' indicators.
 
 lsnstat_macrodata(
-  dataset = "macro_fpt_a38",
-  filters="branch=EZ&year=2018&aggregate=PRD&indic=NRG+GHG"
+  dataset = "macro_fpt",
+  filters="industry=A01&year=2018&aggregate=PRD&indic=NRG+GHG"
   )
 
 }

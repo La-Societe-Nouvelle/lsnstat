@@ -2,6 +2,7 @@
 
 export(lsnstat_macrodata)
 export(lsnstat_metadata)
+export(lsnstat_statdata)
 importFrom(dplyr,"%>%")
 importFrom(dplyr,mutate)
 importFrom(dplyr,rename_with)
