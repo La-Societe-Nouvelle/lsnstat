@@ -1,10 +1,4 @@
-#' R companion of 'La Societe Nouvelle' macro_data API services
-#'
-#' @importFrom dplyr  %>%
-#' @importFrom dplyr mutate
-#' @importFrom dplyr rename_with
-#' @importFrom httr GET
-#' @importFrom jsonlite fromJSON
+#' R companion of 'La Societe Nouvelle' macro_data API service
 #'
 #' @param dataset dataset requested : list available at <https://docs.lasocietenouvelle.org/series-donnees> (required)
 #' @param filters filters to apply : list of dataset 'params' available through service [lsnstat_metadata] (optional)
@@ -34,47 +28,7 @@
 
 lsnstat_macrodata = function (dataset,filters)
 {
-  # check dataset param
-  if (missing(dataset)) {
-    stop("dataset is missing")
-  }
-
-  entrypoint = "https://api.lasocietenouvelle.org/macrodata/"
-
-  if(!missing(filters)){
-    endpoint = paste0(entrypoint,dataset, "?", filters)
-  } else {
-    endpoint = paste0(entrypoint,dataset)
-  }
-
-  tryCatch({
-
-    raw_data = GET(endpoint)
-    res = fromJSON(rawToChar(raw_data$content))
-
-    # RESPONSE NOT OK
-    if (res$header$code!=200) {
-      stop(res$header$message)
-    }
-
-    # NO DATA FOUND
-    else if (length(res$data)==0) {
-      stop("No data found")
-    }
-
-    # OK
-    else {
-      formatted_data = res$data %>%
-        mutate(lastupdate = as.Date(lastupdate),
-               lastupload = as.Date(lastupload)) %>%
-        rename_with(toupper)
-    }
-
-  # API ERROR
-  }, error = function(e) {
-    print(e)
-    stop(e)
-  })
+  formatted_data = lsnstat_getdata(dataset,filters,service = 'macrodata')
 
   return(formatted_data)
 }

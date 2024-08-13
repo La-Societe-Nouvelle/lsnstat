@@ -2,7 +2,7 @@
 % Please edit documentation in R/lsnstat_macrodata.R
 \name{lsnstat_macrodata}
 \alias{lsnstat_macrodata}
-\title{R companion of 'La Societe Nouvelle' macro_data API services}
+\title{R companion of 'La Societe Nouvelle' macro_data API service}
 \usage{
 lsnstat_macrodata(dataset, filters)
 }
@@ -15,7 +15,7 @@ lsnstat_macrodata(dataset, filters)
 A \code{\link[=data.frame]{data.frame()}}.
 }
 \description{
-R companion of 'La Societe Nouvelle' macro_data API services
+R companion of 'La Societe Nouvelle' macro_data API service
 }
 \examples{
 
