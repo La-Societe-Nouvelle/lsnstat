@@ -7,7 +7,7 @@
 lsnstat_metadata(dataset, param)
 }
 \arguments{
-\item{dataset}{dataset requested : list available at \url{https://docs.lasocietenouvelle.org/series-donnees} (required)}
+\item{dataset}{dataset requested : list available through \link{get_lsn_dataset_list} (required)}
 
 \item{param}{list of dataset 'params' available for a dataset (optional)}
 }
@@ -19,20 +19,14 @@ Metadata query function for \link{lsnstat_macrodata} requests.
 }
 \examples{
 
-# GET 'CPEB' (Branch production and operations accounts) table parameters and filters.
+# GET 'figaro_main_aggregates' (Sectoral production accounts from FIGARO)
+# table parameters and codes.
 
-lsnstat_metadata(dataset = "na_cpeb")
+lsnstat_metadata(dataset = "figaro_main_aggregates")
 
-# GET footprints filters for parameter 'indic'.
+# GET 'figaro_intermediate_inputs' (flattened intermediate flows matrix from FIGARO)
+# filters for parameter 'use_country'.
 
-lsnstat_metadata("macro_fpt_a38",param = "indic")
-
-# GET footprints filters for parameter 'unit'.
-
-lsnstat_metadata("macro_fpt_a38",param = "unit")
-
-# GET 'ERE' (resource-use equilibrium) table parameters and filters.
-
-lsnstat_metadata("na_pat_nf")
+lsnstat_metadata("figaro_intermediate_inputs",param = "use_country")
 
 }

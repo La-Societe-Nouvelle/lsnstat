@@ -3,3 +3,4 @@
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
+^dev$

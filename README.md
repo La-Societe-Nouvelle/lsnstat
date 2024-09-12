@@ -1,7 +1,7 @@
 # lsnstat
 R companion of 'La Societe Nouvelle' 'macro_data' API services
 
-The 'lsnstat' package was created to facilitate access to the 'macro_data' service of the 'La Societe Nouvelle' API.
+The 'lsnstat' package was created to facilitate access to the 'La Societe Nouvelle' API.
 
 It ensures a fully-disclosed access to all macro-level data used in the 'La Societe Nouvelle' systems :
 
@@ -10,7 +10,5 @@ It ensures a fully-disclosed access to all macro-level data used in the 'La Soci
 * forecasted structural economic data.
 
 Detailed documentation and methodology are available online : https://docs.lasocietenouvelle.org. 
-
-A specific methodological documentation is currently being drafted and will be released on our website :  https://lasocietenouvelle.org.
 
 This package is designed by 'La Societe Nouvelle', a French organization that set up a non financial national information system.

@@ -1,28 +1,29 @@
 #' Metadata query function for [lsnstat_macrodata] requests.
 #'
+#' @importFrom dplyr %>%
+#' @importFrom dplyr across
+#' @importFrom dplyr arrange_at
+#' @importFrom dplyr filter
+#' @importFrom dplyr matches
+#' @importFrom dplyr rename_with
+#' @importFrom dplyr select
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #'
-#' @param dataset dataset requested : list available at <https://docs.lasocietenouvelle.org/series-donnees> (required)
+#' @param dataset dataset requested : list available through [get_lsn_dataset_list] (required)
 #' @param param list of dataset 'params' available for a dataset (optional)
 #'
 #' @examples
 #'
-#' # GET 'CPEB' (Branch production and operations accounts) table parameters and filters.
+#' # GET 'figaro_main_aggregates' (Sectoral production accounts from FIGARO)
+#' # table parameters and codes.
 #'
-#' lsnstat_metadata(dataset = "na_cpeb")
+#' lsnstat_metadata(dataset = "figaro_main_aggregates")
 #'
-#' # GET footprints filters for parameter 'indic'.
+#' # GET 'figaro_intermediate_inputs' (flattened intermediate flows matrix from FIGARO)
+#' # filters for parameter 'use_country'.
 #'
-#' lsnstat_metadata("macro_fpt_a38",param = "indic")
-#'
-#' # GET footprints filters for parameter 'unit'.
-#'
-#' lsnstat_metadata("macro_fpt_a38",param = "unit")
-#'
-#' # GET 'ERE' (resource-use equilibrium) table parameters and filters.
-#'
-#' lsnstat_metadata("na_pat_nf")
+#' lsnstat_metadata("figaro_intermediate_inputs",param = "use_country")
 #'
 #' @return A [data.frame()].
 #'
@@ -36,17 +37,13 @@ lsnstat_metadata = function (dataset,param)
     stop("dataset is missing")
   }
 
-  entrypoint = "https://api.lasocietenouvelle.org/macrodata/metadata/"
+  entrypoint = "https://api.stats.lasocietenouvelle.org"
 
-  if(!missing(param)){
-    endpoint = paste0(entrypoint,dataset, "?", "param=", param)
-  } else {
-    endpoint = paste0(entrypoint,dataset)
-  }
+  endpoint = paste0(get_endpoint(dataset),"/meta")
 
   tryCatch({
 
-    raw_data = GET(endpoint)
+    raw_data = GET(paste0(entrypoint,endpoint))
     res = fromJSON(rawToChar(raw_data$content))
 
     # RESPONSE NOT OK
@@ -56,7 +53,8 @@ lsnstat_metadata = function (dataset,param)
 
     # OK
     else {
-      formatted_data = res$metadata
+      formatted_data = res$data
+      if(!missing(param)) formatted_data = formatted_data %>% filter(param == !!param)
     }
 
     # API ERROR
@@ -67,3 +65,9 @@ lsnstat_metadata = function (dataset,param)
 
   return(formatted_data)
 }
+
+utils::globalVariables("endpoint")
+
+
+
+

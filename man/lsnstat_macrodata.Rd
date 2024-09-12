@@ -2,38 +2,47 @@
 % Please edit documentation in R/lsnstat_macrodata.R
 \name{lsnstat_macrodata}
 \alias{lsnstat_macrodata}
-\title{R companion of 'La Societe Nouvelle' macro_data API service}
+\title{R companion of 'La Societe Nouvelle' stats API services}
 \usage{
-lsnstat_macrodata(dataset, filters)
+lsnstat_macrodata(dataset, filter_list, filters, sort, verbose = T)
 }
 \arguments{
 \item{dataset}{dataset requested : list available at \url{https://docs.lasocietenouvelle.org/series-donnees} (required)}
 
-\item{filters}{filters to apply : list of dataset 'params' available through service \link{lsnstat_metadata} (optional)}
+\item{filter_list}{filters to apply : R list of dataset 'params' available through function \link{lsnstat_metadata} or \link{get_lsn_dataset_list} (optional)}
+
+\item{filters}{filters to apply : formatted list of dataset 'params' available through function \link{lsnstat_metadata} or \href{optional}{get_lsn_dataset_list}}
+
+\item{sort}{Sort the dataset by one or more 'params' available(s) through function \link{lsnstat_metadata} or \link{get_lsn_dataset_list} (optional).}
+
+\item{verbose}{display or hide supplementary informations.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame()}}.
 }
 \description{
-R companion of 'La Societe Nouvelle' macro_data API service
+R companion of 'La Societe Nouvelle' stats API services
 }
 \examples{
 
-#GET 'CPEB'  (Branch production and operations accounts) forecasted
-# data for division "10" between 2023 and 2025.
+#GET macro footprint : Greenhouse gases emissions intensities
+# for sector "C19" between 2015 and 2021
 
-lsnstat_macrodata(dataset = "na_cpeb", filters="classification=A88&activity=10&year=2023+2024+2025")
+lsnstat_macrodata(dataset = "macro_fpt",
+                  filter_list = list(indic = 'GHG',year = 2015:2021,industry = 'C19'))
 
-# GET 'TEI' (Intermediate consumption table) forecasted data
-# for branch 'JA' use of product 'OZ' in 2022.
+#GET macro footprint trend : Energy uses intensities
+# for sector "C28" between 2025 and 2030
 
-lsnstat_macrodata(dataset = "na_tei", filters="activity=JA&product=OZ&year=2022")
+lsnstat_macrodata(dataset = "macro_fpt_trd",
+                  filters = "indic=NRG&year=2025+2026+2027+2028+2029+2030&industry=C28")
 
-# GET branch 'EZ' 2018 production footprint for 'NRG' and 'GHG' indicators.
+# GET sectoral value-added, production and intermediate consumption from FIGARO
+# for sector 'O84' in 2010 and 2030
 
-lsnstat_macrodata(
-  dataset = "macro_fpt_a38",
-  filters="branch=EZ&year=2018&aggregate=PRD&indic=NRG+GHG"
-  )
+lsnstat_macrodata("figaro_main_aggregates",list(aggregate = c('X','VA','P2'),
+                                                industry = 'O84',
+                                                year = c("2010","2030")),
+                                                sort = c('country','value'))
 
 }
