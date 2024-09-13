@@ -11,7 +11,7 @@ lsnstat_macrodata(dataset, filter_list, filters, sort, verbose = T)
 
 \item{filter_list}{filters to apply : R list of dataset 'params' available through function \link{lsnstat_metadata} or \link{get_lsn_dataset_list} (optional)}
 
-\item{filters}{filters to apply : formatted list of dataset 'params' available through function \link{lsnstat_metadata} or \href{optional}{get_lsn_dataset_list}}
+\item{filters}{filters to apply : formatted list of dataset 'params' available through function \link{lsnstat_metadata} or \link{get_lsn_dataset_list} (optional)}
 
 \item{sort}{Sort the dataset by one or more 'params' available(s) through function \link{lsnstat_metadata} or \link{get_lsn_dataset_list} (optional).}
 

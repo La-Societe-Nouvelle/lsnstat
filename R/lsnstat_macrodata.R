@@ -2,7 +2,7 @@
 #'
 #' @param dataset dataset requested : list available at <https://docs.lasocietenouvelle.org/series-donnees> (required)
 #' @param filter_list filters to apply : R list of dataset 'params' available through function [lsnstat_metadata] or [get_lsn_dataset_list] (optional)
-#' @param filters filters to apply : formatted list of dataset 'params' available through function [lsnstat_metadata] or [get_lsn_dataset_list](optional)
+#' @param filters filters to apply : formatted list of dataset 'params' available through function [lsnstat_metadata] or [get_lsn_dataset_list] (optional)
 #' @param sort Sort the dataset by one or more 'params' available(s) through function [lsnstat_metadata] or [get_lsn_dataset_list] (optional).
 #' @param verbose display or hide supplementary informations.
 #'
