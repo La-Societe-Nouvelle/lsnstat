@@ -1,4 +1,6 @@
 # lsnstat
+![Downloads - Total](https://cranlogs.r-pkg.org/badges/grand-total/lsnstat)&nbsp;&nbsp;![Downloads](https://cranlogs.r-pkg.org/badges/last-month/lsnstat)&nbsp;&nbsp;![Downloads - last week](https://cranlogs.r-pkg.org/badges/last-week/lsnstat)
+
 R companion of 'La Societe Nouvelle' 'macro_data' API services
 
 The 'lsnstat' package was created to facilitate access to the 'La Societe Nouvelle' API.
